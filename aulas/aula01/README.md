@@ -42,3 +42,10 @@ git pull origin nome_da_branch
 ```shell
 git push origin nome_da_branch
 ```
+
+8. Fazer merge com outra ramificação
+
+```shell
+git chechout branch_base
+git merge branch_comparacao
+```
