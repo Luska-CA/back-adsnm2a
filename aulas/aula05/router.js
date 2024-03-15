@@ -13,7 +13,7 @@ router.get('/produtos', function(req,res){
 //})
 
 router.get('/produtos/:produtoId', function(req,res){
-    const encontrado = produtos.find((produto) => produto.id == req.params.produtoId)
+    const encontrado = produtos.find((produto) => produto.id == req.params.produtoId);
     if(!encontrado) {
         res.status(404).json({msg: "produto não encontrado"});
         return;
@@ -26,7 +26,7 @@ router.get('/produtos/:produtoId', function(req,res){
 
 router.post("/produtos", function(req, res){
     if (!req.body || !req.body.nome || !req.body.preco) {
-      res.status(422).json({msg: "Nome e/ou preco do produto obrigatorios"});
+      res.status(422).json({msg: "Nome e preco do produto obrigatorios"});
       return;
     }
     const novo = {id:(produtos.lenght + 1), nome: req.body.nome, preco: req.body.preco}
