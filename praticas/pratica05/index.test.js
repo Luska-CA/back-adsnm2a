@@ -24,7 +24,7 @@ describe('Teste da API /produtos', function(){
     })
 
     test('Deve retornar 201 e um json no POST /produtos', async function(){
-        const response = (await request.post('/produtos')).send({"nome": "uva", "preco": 20.00})
+        const response = await request.post('/produtos').send({nome: "uva", preco: 20.00})
         expect(response.status).toBe(201);
         expect(response.headers['content-type']).toMatch(/json/);
     })
@@ -35,8 +35,8 @@ describe('Teste da API /produtos', function(){
         expect(response.headers['content-type']).toMatch(/json/);
     })
 
-    test('Deve retornar 200 e um json no PUT /produtos/1', async function(){
-        const response = await request.put('/produtos').send({"nome": "uva verde", "preco": 18.00});
+    test('Deve retornar 200 e um json no PUT /produtos/Id', async function(){
+        const response = await request.put('/produtos/1').send({nome: "uva verde", preco: 18.00});
         expect(response.status).toBe(200);
         expect(response.headers['content-type']).toMatch(/json/);
     })
