@@ -4,11 +4,17 @@ function listarTodos(req,res){
     res.json(produtos);
 }
 
-function buscarPeloId(req,res){
+function exibir(req,res){
+    const {produtoEncontrado} = req;
+    res.json(produtoEncontrado);
+}
+
+function buscarPeloId(req,res, next){
     const {produtoId} = req.params;
     const produtoEncontrado = produtos.find(item => item.id == produtoId);
     if (produtoEncontrado) {
-        res.json(produtoEncontrado);
+        req.produtoEncontrado = produtoEncontrado;
+        next();
     }else{
         res.status(404).json({msg: "produto não encontrado"});
     }
@@ -22,16 +28,11 @@ function criar(req,res){
 }
 
 function atualizar(req,res){
-    const {produtoId} = req.params;
     const {nome, preco} = req.body;
-    const produtoEncontrado = produtos.find(item => item.id == produtoId);
-    if (produtoEncontrado) {
-        produtoEncontrado.nome = nome;
-        produtoEncontrado.preco = preco;
-        res.json(produtoEncontrado);
-    }else{
-        res.status(404).json({msg: "produto não encontrado"});
-    }
+    const {produtoEncontrado} = req;
+    produtoEncontrado.nome = nome;
+    produtoEncontrado.preco = preco;
+    res.json(produtoEncontrado);
 }
 
 function remover(req,res){
@@ -40,9 +41,7 @@ function remover(req,res){
     if (posicao >= 0){
         produtos.splice(posicao,1);
         res.status(204).end();
-    }else{
-        res.status(404).json({msg: "produto não encontrado"});
     }
 }
 
-module.exports = {listarTodos, buscarPeloId, criar, atualizar, remover};
+module.exports = {listarTodos, exibir, buscarPeloId, criar, atualizar, remover};

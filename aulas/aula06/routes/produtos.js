@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.get("/", produtosController.listarTodos);
 
-router.get("/:produtoId", produtosController.buscarPeloId);
+router.get("/:produtoId", produtosController.buscarPeloId, produtosController.exibir);
 
 router.post("/", produtosController.criar);
 
-router.put("/:produtoId", produtosController.atualizar);
+router.put("/:produtoId", produtosController.buscarPeloId, produtosController.atualizar);
 
-router.delete("/:produtoId", produtosController.remover);
+router.delete("/:produtoId", produtosController.buscarPeloId,produtosController.remover);
 
 module.exports = router;
