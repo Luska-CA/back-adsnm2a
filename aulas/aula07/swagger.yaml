@@ -13,6 +13,13 @@ paths:
     get:
       tags:
             - produtos
+      responses:
+        200:
+          description: list of registred products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayDeProdutos'
     post:
           tags:
             - produtos
@@ -20,26 +27,44 @@ paths:
             description: JSON with data on the new product
             required: true
             content:
-              aplication/json:
+              application/json:
                 schema:
                   $ref: '#/components/schemas/DadosProduto'
           responses:
             201:
               description: Product sucsessfully created
               content:
-                aplication/json:
+                application/json:
                   schema:
                     $ref: '#/components/schemas/Produto'
             422:
               description: Name and price are required
               content:
-                aplication/json:
+                application/json:
                   schema:
                     $ref: '#/components/schemas/Mensagem'
   /produtos/{produtoId}:
     get:
-          tags:
-            - produtos
+      tags:
+        - produtos
+      parameters:
+        - in: path
+          name: produtoId
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
     put:
           tags:
             - produtos
@@ -63,24 +88,39 @@ paths:
             200:
               description: Product update sucsessfully
               content:
-                aplication/json:
+                application/json:
                   schema:
                     $ref: '#/components/schemas/Produto'
             404:
               description: Product not found
               content:
-                aplication/json:
+                application/json:
                   schema:
                     $ref: '#/components/schemas/Mensagem'
             422:
               description: Name and price are required
               content:
-                aplication/json:
+                application/json:
                   shcema:
                     $ref: '#/components/schemas/Mensagem'
     delete:
-          tags:
-            - produtos
+      tags:
+        - produtos
+      parameters:
+        - in: path
+          name: produtoId
+          required: true
+          type: integer
+      responses:
+        204:
+          description: Product Deleted
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+
 components:
   schemas:
     DadosProduto:
@@ -104,3 +144,7 @@ components:
       properties:
         msg:
           type: string
+    ArrayDeProdutos:
+      type: array
+      items:
+        $ref: '#/components/schemas/Produto'
