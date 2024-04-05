@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: SWAGGER PRATICA 7
+  description: Test API for practice 7
+  version: 1.0
+servers:
+  url: http://localhost:3000
+  description: Development enviroment
+tags:
+  - name: produtos
+paths:
+  /produtos: 
+    get:
+      tags: 
+        - produtos
+      responses: 
+        200:
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayDeProdutos'
+    post:
+      tags: 
+        - produtos
+      requestBody: 
+        description: JSON with the data on the new product
+        required: true
+        content: 
+          aplication/json:
+            schema:
+              $ref: '#/components/schemas/Produto'
+      responses: 
+        201:
+        description: 'Product created sucssesfully'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produtos'
+        422:
+          description: 'Name and price are required'
+  /produtos/{produtoId}:
+    get:
+      tags: 
+        - produtos
+      parameters:
+        - in: path
+          name: produtoId
+          required: true
+          type: integer
+          description: Id from searched Product
+
+      responses:
+      200:
+        description: 'JSON with searched product data'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produto'
+      404:
+        description: 'Produto não encontrado'
+    put:
+      tags:
+        - produtos
+      parameters:
+        - in: path 
+          name: produtoId
+          type: integer
+          required: true
+          description: ID from analised product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produto'
+      responses:
+          200:
+            description: Product update sucsessfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Produto'
+          404:
+            description: Product not found
+          422:
+            description: Name and price are required
+    delete:
+      tags:
+        - produtos
+      paramaters:
+        - in: path
+          name: produtoId
+          type: integer
+          required: true
+          decription: Id from product to be removed
+      responses:
+        204:
+          description: 'Product sucssesfully removed'
+        404:
+          description: 'Product not found'
+
+components:
+  schemas:
+    Produto:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        preco:
+          type: number
+    ArrayOfProdutos:
+      type:
+        array:
+          items:
+            $ref: '#/components/schemas/Produto'
