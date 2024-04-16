@@ -23,7 +23,7 @@ app.get("/", function(req, res){
 
 app.post("/", function(req,res){
     console.log(req.body);
-    res.json({status: "200", message: "Sucesso"});
+    res.json({status: "200", "message": "Sucesso"});
 })
 
 app.put("/", function(req,res){
