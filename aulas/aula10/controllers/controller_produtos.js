@@ -1,4 +1,5 @@
 const Produto = require('../models/model_produtos');
+const mongoose = require('mongoose');
 
 async function validarDados(req,res,next){
     const produto = new Produto(req.body);
@@ -18,7 +19,25 @@ async function criar(req, res){
 
 async function obterTodos(req,res){
     const produtos = await Produto.find({});
-    res.json({produtos});
+    res.json(produtos);
 }
 
-module.exports = {validarDados, criar, obterTodos};
+async function buscarPeloId(req,res, next){
+    try{
+        const id = new mongoose.Types.ObjectId(req.params.id);
+        const produto = await Produto.findOne({_id: id});
+        if(produto) next();
+        else res.status(404).json({msg: "Produto nao encontrado!"});
+
+    }catch (err){
+        res.status(404).json({msg: "Id invalido"});
+    }
+}
+
+async function obter(req,res){
+    const id = new mongoose.Types.ObjectId(req.params.id);
+    const produto = await Produto.findOne({_id: id});
+    res.json(produto);
+}
+
+module.exports = {validarDados, criar, obterTodos, obter, buscarPeloId};

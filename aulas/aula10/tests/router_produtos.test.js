@@ -23,7 +23,7 @@ describe('API Loja Virtual', () => {
         const response = await request.get('/produtos');
         expect(response.status).toBe(200);
         expect(response.type).toBe("application/json");
-        if (response.body.lenght > 0) {
+        if (response.body.length > 0) {
             id = response.body[0]._id.toString()
         }
     });
@@ -31,5 +31,10 @@ describe('API Loja Virtual', () => {
         const response = await request.get(`/produtos/${id}`);
         expect(response.status).toBe(200);
         expect(response.type).toBe('application/json');
+    });
+    test('Deve retornar 404 e um JSON no GET /produtos/66284cc0d6f61dd38f6e4521', async () => {
+        const response = await request.get("/produtos/id");
+        expect(response.status).toBe(404);
+        expect(response.type).toBe("application/json");
     });
 })
