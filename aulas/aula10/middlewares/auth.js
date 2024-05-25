@@ -1,14 +1,17 @@
+const jwt = require('jsonwebtoken');
 
 function validarToken(req,res,next){
-    if (req.headers.token) {
-        if(req.headers.token === '1234567890'){
+    const token = req.headers['authorization'];
+    if (token){
+        try {
+            const payload = jwt.verify(token, '12345678');
+            console.log(payload);
             next();
-        } else {
-            res.status(401).json({msg: 'acesso negado'});
+        } catch (err){
+            res.status(404).json({msg: 'acesso negado'});
         }
-
     } else {
-        res.status(401).json({msg: 'acesso negado'});
+        res.status(400).json({msg: 'token invalido'});
     }
 }
 
