@@ -34,6 +34,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArrayOfProdutos'
+      
+      security:
+        - JWTAuth: []
+        
   /produtos/{id}:
     get:
 
@@ -49,7 +53,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Produto'
-        
         400:
           content:
             application/json:
@@ -121,6 +124,11 @@ paths:
         
 
 components:
+  securitySchemes:
+    JWTAuth:
+      type: apiKey
+      in: header
+      name: Authorization
   schemas:
     ArrayOfProdutos:
       type: array

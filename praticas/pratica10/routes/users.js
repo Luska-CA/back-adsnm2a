@@ -4,8 +4,6 @@ var router = express.Router();
 
 router.post('/', controller.criar);
 
-router.post("/login", controller.entrar);
-
-router.post('/renovar', controller.renovar);
+router.post('/login', controller.entrar);
 
 module.exports = router;
