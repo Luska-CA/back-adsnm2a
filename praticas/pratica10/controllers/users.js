@@ -38,4 +38,8 @@ async function entrar(req,res){
     }
 }
 
-module.exports = {criar, entrar};
+async function renovar(req, res){
+    res.json({token: gerarToken({email: req.user.email})});
+}
+
+module.exports = {criar, entrar, renovar};

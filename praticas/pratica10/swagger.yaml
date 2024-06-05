@@ -47,8 +47,29 @@ paths:
           content: 
             application/json:
               schema:
-                $ref: '#/componenst/schemas/Mensagem'
+                $ref: '#/components/schemas/Mensagem'
   /usuarios/renovar:
+    post:
+      tags:
+        - usuarios
+      responses:
+        200:
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+        400:
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+        401:
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+      security:
+        - JWTAuth: []
 components:
   schemas:
     Usuario:
@@ -66,3 +87,8 @@ components:
         msg:
           type: string
   securitySchemes:
+    JWTAuth:
+      type: apiKey
+      in: header
+      name: authorization
+
